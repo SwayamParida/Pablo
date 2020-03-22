@@ -21,12 +21,13 @@ public class Card {
     }
 
     public String toString() {
-        return String.format("%s of %s", suits[suit.getIndex()], ranks[rank]);
+        return String.format("%s of %s", ranks[rank-1], suits[suit.getIndex()]);
     }
 
-    public boolean equals(Card card) {
-        return this.suit == card.suit
-                && this.rank == card.rank
-                && this.value == card.value;
+    public boolean equals(Object card) {
+        return card.getClass().equals(this.getClass())
+                && this.suit == ((Card) card).suit
+                && this.rank == ((Card) card).rank
+                && this.value == ((Card) card).value;
     }
 }

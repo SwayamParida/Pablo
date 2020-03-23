@@ -33,7 +33,7 @@ public class GameClientHandler implements Runnable {
                 continue;
             PrintWriter out = GameServer.outputWriterMap.computeIfAbsent(clientSocket, GameClientHandler::createPrintWriterForSocket);
             assert out != null;
-            out.printf("%s has joined the game\n", newPlayer.getPlayerName());
+            out.printf("%s has joined the game\n", newPlayer);
         }
     }
 
@@ -46,7 +46,7 @@ public class GameClientHandler implements Runnable {
         else {
             out.println("Players already in the lobby are:");
             for (Player player : GameServer.gameState.getPlayers())
-                out.println(player.getPlayerName());
+                out.println(player);
         }
     }
 

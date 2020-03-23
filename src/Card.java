@@ -20,6 +20,10 @@ public class Card {
         this.value = Math.min(rank, 10); // Assign face cards value of 10
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public String toString() {
         return String.format("%s of %s", ranks[rank-1], suits[suit.getIndex()]);
     }

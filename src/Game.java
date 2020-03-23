@@ -8,8 +8,6 @@ public class Game {
     private Player curPlayer;
     private int turn;
 
-    public enum Move { DRAW_DECK, DRAW_PILE }
-
     public Game() {
         deck = new Deck();
         pile = new Pile();
@@ -40,14 +38,33 @@ public class Game {
         pile.addCard(deck.drawCard());
     }
 
-    public Card makeMove(Move move) {
-        if (move == Move.DRAW_DECK) {
-            return curPlayer.draw(deck);
-        }
-        if (move == Move.DRAW_PILE) {
-            return curPlayer.draw(pile);
-        }
-        return null;
+    public Card drawDeck() {
+        return curPlayer.draw(deck);
+    }
+
+    public Card drawPile() {
+        return curPlayer.draw(pile);
+    }
+
+    public Card discard() {
+        return curPlayer.discard(pile);
+    }
+
+    public Card keep(int index) {
+        curPlayer.swapWithHand(index);
+        return curPlayer.discard(pile);
+    }
+
+    public Card peekSelf(int index) {
+        return curPlayer.peek(index);
+    }
+
+    public Card peekOther(Player target, int index) {
+        return target.peek(index);
+    }
+
+    public void playerSwap(Player target, int sourceIndex, int targetIndex) {
+        curPlayer.swapWithPlayer(sourceIndex, target, targetIndex);
     }
 
     public void endTurn() {
@@ -56,6 +73,14 @@ public class Game {
 
     public Card topOfPile() {
         return pile.peek();
+    }
+
+    public Player findPlayerByName(String playerName) {
+        for (Player p : players) {
+            if (playerName.equals(p.toString()))
+                return p;
+        }
+        return null;
     }
 
     public String toString() {

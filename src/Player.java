@@ -21,9 +21,10 @@ public class Player {
         return cardInHand;
     }
 
-    public void discard(Pile pile) {
+    public Card discard(Pile pile) {
         pile.addCard(cardInHand);
         cardInHand = null;
+        return pile.peek();
     }
 
     public void swapWithHand(int cardIndex) {
@@ -42,17 +43,7 @@ public class Player {
         return cards[cardIndex];
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("Player name: %s\n", playerName));
-        stringBuilder.append(String.format("Number of cards: %d\n", numCards));
-        for (int i = 0; i < numCards; ++i) {
-            stringBuilder.append(cards[i]).append('\n');
-        }
-        return stringBuilder.toString();
+        return playerName;
     }
 }

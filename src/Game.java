@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Game {
@@ -81,6 +83,10 @@ public class Game {
                 return p;
         }
         return null;
+    }
+
+    public Player getWinner() {
+        return Collections.min(players, Comparator.comparingInt(Player::getTotal));
     }
 
     public String toString() {

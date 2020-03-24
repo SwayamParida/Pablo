@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Player {
     private String playerName;
     private Card[] cards;
@@ -43,7 +45,31 @@ public class Player {
         return cards[cardIndex];
     }
 
+    public int getTotal() {
+        int sum = 0;
+        for (Card card : cards)
+            sum += card.getValue();
+        return sum;
+    }
+
+    public String cardReveal() {
+        StringBuilder stringBuilder = new StringBuilder("{");
+        for (int i = 0; i < numCards - 1; ++i)
+            stringBuilder.append(String.format("%s, ", cards[i]));
+        stringBuilder.append(String.format("%s}\t(%d)", cards[numCards-1], getTotal()));
+        return stringBuilder.toString();
+    }
+
+    @Override
     public String toString() {
         return playerName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
     }
 }

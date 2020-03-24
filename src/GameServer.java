@@ -4,6 +4,9 @@ import java.net.Socket;
 import java.util.*;
 
 public class GameServer {
+    private static final String CLEAR = "\033[H\033[2J";
+    private static final long PEEK_TIME = 4000;
+    private static final long BETWEEN_TURNS_TIME = 2000;
     private static final int portNumber = 4444;
     public static final int MAX_CLIENTS = 4;
 
@@ -17,8 +20,11 @@ public class GameServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         establishConnections();
+        broadcastMessage(CLEAR);
         broadcastMessage("\nGame is starting.\n");
         initialPeek();
+        Thread.sleep(PEEK_TIME);
+        broadcastMessage(CLEAR);
         gameState.initGame();
 
         while (true) {
@@ -27,22 +33,29 @@ public class GameServer {
             broadcastMessage(String.format("Card on top of the discard pile: %s\n", gameState.topOfPile()));
 
             // User draws card from deck or pile
-            sendMessage(getCurPlayerSocket(), "Would you like to draw from the deck or the pile?");
-            String source = getUserInput();
-            drawCard(source);
+            sendMessage(getCurPlayerSocket(), "Would you like to draw from the deck or the pile or call Pablo?");
+            String initialMove = getUserInput();
+            startTurn(initialMove);
+            if (initialMove.equals("pablo")) break;
 
-            String move;
+            String nextMove = "";
             // User swaps card with own cards or discards card (power card handling already performed by helper methods)
-            if (source.equals("deck")) {
-                sendMessage(getCurPlayerSocket(), "Would you like to discard the card or keep it?");
-                move = getUserInput();
-            } else {
-                move = "keep";
+            switch (initialMove) {
+                case "deck":
+                    sendMessage(getCurPlayerSocket(), "Would you like to discard the card or keep it?");
+                    nextMove = getUserInput();
+                    break;
+                case "pile":
+                    nextMove = "keep";
             }
-            processMove(move);
+            processMove(nextMove);
 
+            Thread.sleep(BETWEEN_TURNS_TIME);
+            broadcastMessage(CLEAR);
             gameState.endTurn();
         }
+
+        broadcastMessage("\nGame has ended.\n");
     }
 
     private static void establishConnections() throws IOException, InterruptedException {
@@ -73,6 +86,15 @@ public class GameServer {
         }
     }
 
+    private static void broadcastMessage(String message, Set<Socket> exceptions) {
+        for (Map.Entry<Socket, PrintWriter> socketWriterPair : outputWriterMap.entrySet()) {
+            Socket s = socketWriterPair.getKey();
+            PrintWriter out = socketWriterPair.getValue();
+            if (!exceptions.contains(s))
+                out.println(message);
+        }
+    }
+
     private static void sendMessage(Socket s, String message) {
         outputWriterMap.get(s).println(message);
     }
@@ -81,13 +103,13 @@ public class GameServer {
         for (Map.Entry<Player, Socket> socketPlayerPair : playerSocketMap.entrySet()) {
             Socket s = socketPlayerPair.getValue();
             Player p = socketPlayerPair.getKey();
-            String message = String.format("Your initial cards are:\n%s\t\t(1)\n%s\t\t(2)\n", p.initialPeek()[0], p.initialPeek()[1]);
+            String message = String.format("Your initial cards are:\n(1)%s\n(2)%s\n", p.initialPeek()[0], p.initialPeek()[1]);
             sendMessage(s, message);
         }
     }
 
-    private static void drawCard(String drawSource) {
-        switch (drawSource) {
+    private static void startTurn(String move) {
+        switch (move.toLowerCase()) {
             case "deck":
                 Card drawnCard = gameState.drawDeck();
                 String playerFeedback = String.format("You have drawn a: %s\n", drawnCard);
@@ -99,6 +121,23 @@ public class GameServer {
                 playerFeedback = String.format("You have drawn a: %s\n", drawnCard);
                 sendMessage(getCurPlayerSocket(), playerFeedback);
                 broadcastMessage(String.format("%s drew the %s from the pile", gameState.getCurPlayer(), drawnCard), getCurPlayerSocket());
+                return;
+            case "pablo":
+                broadcastMessage(String.format("%s called Pablo!", gameState.getCurPlayer()), getCurPlayerSocket());
+                for (Player player : gameState.getPlayers()) {
+                    sendMessage(getPlayerSocket(player), String.format("You had: %s", player.cardReveal()));
+                    broadcastMessage(String.format("%s has: %s", player, player.cardReveal()), getPlayerSocket(player));
+                }
+                Player winner = gameState.getWinner();
+                boolean correctCall = winner.equals(gameState.getCurPlayer());
+                if (correctCall) {
+                    sendMessage(getPlayerSocket(gameState.getCurPlayer()), "You called Pablo correctly and won the round.");
+                    broadcastMessage(String.format("%s called Pablo correctly and won the round\n", gameState.getCurPlayer()), getCurPlayerSocket());
+                } else {
+                    sendMessage(getCurPlayerSocket(), String.format("You called Pablo incorrectly.\n%s has won the round.", winner));
+                    sendMessage(getPlayerSocket(winner), String.format("%s called Pablo incorrectly.\nYou have won the round", gameState.getCurPlayer()));
+                    broadcastMessage(String.format("%s called Pablo incorrectly.\n%s has won\n", gameState.getCurPlayer(), winner), new HashSet<>(Arrays.asList(getPlayerSocket(winner), getCurPlayerSocket())));
+                }
         }
     }
 
@@ -190,6 +229,10 @@ public class GameServer {
 
     private static Socket getCurPlayerSocket() {
         return playerSocketMap.get(gameState.getCurPlayer());
+    }
+
+    private static Socket getPlayerSocket(Player player) {
+        return playerSocketMap.get(player);
     }
 
     private static String getUserInput() throws IOException {

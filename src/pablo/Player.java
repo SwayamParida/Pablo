@@ -1,6 +1,9 @@
+package pablo;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Serializable {
     private String playerName;
     private Card[] cards;
     private Card cardInHand;
@@ -52,12 +55,8 @@ public class Player {
         return sum;
     }
 
-    public String cardReveal() {
-        StringBuilder stringBuilder = new StringBuilder("{");
-        for (int i = 0; i < numCards - 1; ++i)
-            stringBuilder.append(String.format("%s, ", cards[i]));
-        stringBuilder.append(String.format("%s}\t(%d)", cards[numCards-1], getTotal()));
-        return stringBuilder.toString();
+    public Card[] getCards() {
+        return cards;
     }
 
     @Override

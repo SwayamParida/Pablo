@@ -1,0 +1,11 @@
+
+.image-view-wrapper:border_clicked {
+    -fx-border-color: yellowgreen;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}
+.image-view-wrapper:border_hovered {
+    -fx-border-color: yellow;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}

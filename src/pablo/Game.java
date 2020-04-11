@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+package pablo;
+
+import java.util.*;
 
 public class Game {
     private Deck deck;
@@ -74,7 +73,11 @@ public class Game {
     }
 
     public Card topOfPile() {
-        return pile.peek();
+        try {
+            return pile.peek();
+        } catch (EmptyStackException ignore) {
+            return null;
+        }
     }
 
     public Player findPlayerByName(String playerName) {

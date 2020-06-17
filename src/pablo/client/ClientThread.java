@@ -1,4 +1,7 @@
-package pablo;
+package pablo.client;
+
+import pablo.Constants;
+import pablo.Protocol;
 
 import java.io.EOFException;
 import java.io.IOException;

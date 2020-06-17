@@ -1,4 +1,4 @@
-package pablo;
+package pablo.client;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -7,6 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import pablo.Card;
+import pablo.Constants;
+import pablo.Player;
+import pablo.Protocol;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -28,8 +32,8 @@ public class BoardController implements Constants {
 
     public final Protocol clientOutput;
 
-    @FXML PlayerView bottomPlayerView, topPlayerView, leftPlayerView, rightPlayerView;
-    @FXML ImageView discardPileImageView, drawnCardImageView;
+    @FXML public PlayerView bottomPlayerView, topPlayerView, leftPlayerView, rightPlayerView;
+    @FXML public ImageView discardPileImageView, drawnCardImageView;
 
     public BoardController() {
         numPlayersInitialized = 0;

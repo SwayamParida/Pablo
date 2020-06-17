@@ -3,13 +3,15 @@ package pablo;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import pablo.client.BoardController;
+import pablo.client.PlayerView;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static pablo.BoardController.CARD_BACK;
+import static pablo.client.BoardController.CARD_BACK;
 
 public class Protocol implements Serializable, Constants {
     private State state;

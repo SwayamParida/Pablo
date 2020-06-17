@@ -2,25 +2,25 @@
 
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import pablo.*?>
+<?import pablo.client.PlayerView?>
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pablo.BoardController">
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pablo.client.BoardController">
     <PlayerView fx:id="leftPlayerView" onMouseClicked="#playerViewClicked" GridPane.columnIndex="0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS"/>
     <PlayerView fx:id="rightPlayerView" onMouseClicked="#playerViewClicked" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS"/>
     <PlayerView fx:id="topPlayerView" onMouseClicked="#playerViewClicked" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
     <PlayerView fx:id="bottomPlayerView" onMouseClicked="#playerViewClicked" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS"/>
     <ImageView fx:id="drawnCardImageView" onMouseClicked="#actOnDrawnCard" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-        <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@res/no_card.png" />
+        <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@../res/no_card.png" />
     </ImageView>
     <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <HBox alignment="CENTER">
             <ImageView onMouseClicked="#drawFromDeck">
-                <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@res/red_back.png" />
+                <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@../res/red_back.png" />
             </ImageView>
             <ImageView fx:id="discardPileImageView" onMouseClicked="#drawFromPile">
-                <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@res/no_card.png" />
+                <Image preserveRatio="true" requestedHeight="100" requestedWidth="100" url="@../res/no_card.png" />
             </ImageView>
         </HBox>
         <Label onMouseClicked="#callPablo">

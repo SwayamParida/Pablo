@@ -10,28 +10,28 @@
     <BorderPane GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="image-view-wrapper">
         <center>
             <ImageView fx:id="topLeftImageView">
-                <Image url="@res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
+                <Image url="@../res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
             </ImageView>
         </center>
     </BorderPane>
     <BorderPane GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="image-view-wrapper">
         <center>
             <ImageView fx:id="topRightImageView">
-                <Image url="@res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
+                <Image url="@../res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
             </ImageView>
         </center>
     </BorderPane>
     <BorderPane GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="image-view-wrapper">
         <center>
             <ImageView fx:id="bottomLeftImageView">
-                <Image url="@res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
+                <Image url="@../res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
             </ImageView>
         </center>
     </BorderPane>
     <BorderPane GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="image-view-wrapper">
         <center>
             <ImageView fx:id="bottomRightImageView">
-                <Image url="@res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
+                <Image url="@../res/no_card.png" requestedHeight="100" requestedWidth="100" preserveRatio="true"/>
             </ImageView>
         </center>
     </BorderPane>

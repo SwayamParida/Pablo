@@ -1,4 +1,4 @@
-package pablo;
+package pablo.client;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
@@ -10,12 +10,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import pablo.Card;
+import pablo.Constants;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static pablo.BoardController.CARD_BACK;
+import static pablo.client.BoardController.CARD_BACK;
 
 public class PlayerView extends GridPane implements Constants {
     @FXML Label playerName;

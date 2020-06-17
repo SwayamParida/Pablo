@@ -1,10 +1,13 @@
-package pablo;
+package pablo.server;
+
+import pablo.Player;
+import pablo.Protocol;
 
 import java.io.*;
 import java.net.Socket;
 
 public class ServerThread implements Runnable {
-    private Socket curClientSocket;
+    private final Socket curClientSocket;
 
     public ServerThread(Socket curSocket) {
         curClientSocket = curSocket;

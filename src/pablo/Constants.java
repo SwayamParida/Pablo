@@ -1,7 +1,5 @@
 package pablo;
 
-import javafx.scene.image.Image;
-
 public interface Constants {
     enum DrawSource { PILE, DECK }
     enum State {
@@ -11,11 +9,11 @@ public interface Constants {
     }
 
     int portNumber = 4444;
-    String hostName = "localhost";
+    String hostName = "138.68.254.97";
     int MAX_CLIENTS = 4;
 
-    String NO_CARD_FILEPATH = "res/no_card.png";
-    String CARD_BACK_FILEPATH = "res/red_back.png";
+    String NO_CARD_FILEPATH = "../res/no_card.png";
+    String CARD_BACK_FILEPATH = "../res/red_back.png";
 
     long VIEW_TURN_TIME = 1500;
     long PEEK_TIME = 4000;

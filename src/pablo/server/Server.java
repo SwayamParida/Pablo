@@ -1,4 +1,10 @@
-package pablo;
+package pablo.server;
+
+import pablo.Constants;
+import pablo.Game;
+import pablo.Player;
+import pablo.Card;
+import pablo.Protocol;
 
 import java.io.*;
 import java.net.ServerSocket;
